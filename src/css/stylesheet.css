@@ -13,10 +13,14 @@ body {
 }
 
 :root {
-    --star-opacity: 0.6;
+    --star-padding: -20px;
+    --star-size-white: 176px;
+    --star-size-yellow: 88px;
+    --yellow-offset-y: calc(var(--star-size-white) * 0.387);
+    --yellow-offset-x: calc(var(--star-size-white) * 0.503);
+
     --inner-outline: 6px;
     --frame-thickness: 48px;
-    --frame-thickness-mobile: 48px;
 }
 
 /* YouTube video background. */
@@ -59,23 +63,6 @@ body {
     box-shadow: 0 0 0 1px rgba(0,0,0,0.1) inset;
 }
 
-.video-stars {
-    inset: 0;
-    border: solid var(--frame-thickness) transparent;
-    opacity: var(--star-opacity);
-    position: absolute;
-    pointer-events: none;
-
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 60 60'%3E%3Cstyle%3E@keyframes spin%7Bto%7Btransform:rotate(360deg)%7D%7Dpath%7Btransform-origin:32px%2032px;animation:spin%202s%20linear%20infinite%7D%3C/style%3E%3Cg%20fill='none'%20stroke='%23FFFFFF'%20stroke-width='2'%3E%3Cpath%20d='M32%206l6.5%2013.2L53%2021.8%2042.5%2032l3%2014L32%2038.6%2018.5%2046l3-14L11%2021.8l14.5-2.6z'/%3E%3C/g%3E%3C/svg%3E");
-
-    -webkit-mask:
-      linear-gradient(#000 0 0) content-box,
-      linear-gradient(#000 0 0);
-    mask-composite: exclude;
-    -webkit-mask-composite: xor;
-}
-
-/* YouTube video background (iframe). */
 .video-background iframe {
     top: 50%;
     left: 50%;
@@ -92,16 +79,120 @@ body {
     animation-delay: 5s;
 }
 
+/* Star stuff. */
+.corner-star {
+    inset: 0;
+    z-index: 3;
+    position: fixed;
+    pointer-events: none;
+}
+
+.star-white {
+  position: fixed;
+  top: var(--star-padding);
+  left: var(--star-padding);
+  width: var(--star-size-white);
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 6px 18px rgba(0,0,0,0.35));
+  animation: burstSpin 31s linear infinite;
+  transform-origin: 50% 50%;
+}
+
+.star-white-br {
+  position: fixed;
+  right: var(--star-padding);
+  bottom: var(--star-padding);
+  width: var(--star-size-white);
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 6px 18px rgba(0,0,0,0.35));
+  animation: burstSpin 31s linear infinite;
+  transform-origin: 50% 50%;
+}
+
+.star-yellow {
+    position: fixed;
+    top: calc(var(--star-padding) + var(--yellow-offset-y));
+    left: calc(var(--star-padding) + var(--yellow-offset-x));
+    width: var(--star-size-yellow);
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.25));
+    height: auto;
+    display: block;
+    animation: burstSpin 31s linear infinite 5s;
+    transform-origin: 50% 50%;
+}
+
+.star-yellow-br {
+  position: fixed;
+  right: calc(var(--star-padding) + var(--yellow-offset-x));
+  bottom: calc(var(--star-padding) + var(--yellow-offset-y));
+  width: var(--star-size-yellow);
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.25));
+  animation: burstSpin 31s linear infinite 5s;
+  transform-origin: 50% 50%;
+}
+
+.star-white polygon{
+  fill: #ffffff;
+}
+
+.star-white-br polygon { fill: #ffffff; }
+
+.star-yellow polygon {
+  fill: #FFFF00;
+}
+
+.star-yellow-br polygon { fill: #FFFF00; }
+
+/* CRT filter. */
+.crt-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 1;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.22) 0px,
+      rgba(0, 0, 0, 0.22) 1px,
+      rgba(0, 0, 0, 0.00) 2px,
+      rgba(0, 0, 0, 0.00) 3px
+    );
+  box-shadow: inset 0 0 60px rgba(0,0,0,0.35);
+  animation: crtFlicker 1.8s infinite;
+  transform: translateZ(0);
+}
+
+
 /* Fade-in animation for YouTube video background. */
 @keyframes fadeIn {
     to {
-        opacity: 0.3;
+        opacity: 1.0;
     }
 }
 
+/* Burst spinning animation for star stuff. */
+@keyframes burstSpin {
+  0%   { transform: rotate(0deg); }
+  3%   { transform: rotate(360deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* CRT animation. */
+@keyframes crtFlicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+  20%, 24%, 55% { opacity: 0.94; }
+}
+
 @media (max-width: 768px) {
+
+    /* YouTube video background. */
     .video-decoration { display: block; }
-    .video-decoration::before,
-    .video-stars { border-width: var(--frame-thickness-mobile); }
-    .video-decoration::after { inset: var(--frame-thickness-mobile); }
+    .video-background iframe {
+        display: none;
+    }
 }
