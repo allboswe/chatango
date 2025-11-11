@@ -12,6 +12,13 @@ body {
     background-color: black;
 }
 
+:root {
+    --star-opacity: 0.6;
+    --inner-outline: 6px;
+    --frame-thickness: 48px;
+    --frame-thickness-mobile: 48px;
+}
+
 /* YouTube video background. */
 .video-background {
     top: 0;
@@ -23,18 +30,49 @@ body {
     position: fixed;
 }
 
-/* YouTube video background (overlay). */
-.video-background::after {
+.video-decoration {
     inset: 0;
-    content: "";
-    z-index: 1;
+    z-index: 2;
     position: absolute;
-    background:
-      linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, transparent 20%),
-      linear-gradient(to bottom, rgba(0, 0, 0, 0.9) 0%, transparent 20%),
-      linear-gradient(to left, rgba(0, 0, 0, 0.9) 0%, transparent 20%),
-      linear-gradient(to right, rgba(0, 0, 0, 0.9) 0%, transparent 20%);
     pointer-events: none;
+}
+
+.video-decoration::before {
+    inset: 0;
+    border: solid var(--frame-thickness) transparent;
+    content: "";
+    position: absolute;
+    background: #00FFFF;
+
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    -webkit-mask-composite: xor;
+}
+
+.video-decoration::after {
+    inset: var(--frame-thickness);
+    border: var(--inner-outline) solid #FFFF00;
+    content: "";
+    position: absolute;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.1) inset;
+}
+
+.video-stars {
+    inset: 0;
+    border: solid var(--frame-thickness) transparent;
+    opacity: var(--star-opacity);
+    position: absolute;
+    pointer-events: none;
+
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 60 60'%3E%3Cstyle%3E@keyframes spin%7Bto%7Btransform:rotate(360deg)%7D%7Dpath%7Btransform-origin:32px%2032px;animation:spin%202s%20linear%20infinite%7D%3C/style%3E%3Cg%20fill='none'%20stroke='%23FFFFFF'%20stroke-width='2'%3E%3Cpath%20d='M32%206l6.5%2013.2L53%2021.8%2042.5%2032l3%2014L32%2038.6%2018.5%2046l3-14L11%2021.8l14.5-2.6z'/%3E%3C/g%3E%3C/svg%3E");
+
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    -webkit-mask-composite: xor;
 }
 
 /* YouTube video background (iframe). */
@@ -51,26 +89,19 @@ body {
     transform: translate(-50%, -50%);
     min-height: 56.25vw;
     pointer-events: none;
-    animation-delay: 10s;
+    animation-delay: 5s;
 }
 
 /* Fade-in animation for YouTube video background. */
 @keyframes fadeIn {
     to {
-        opacity: 1;
+        opacity: 0.3;
     }
 }
 
 @media (max-width: 768px) {
-    /* Hide YouTube video background. */
-    .video-background {
-        display: none;
-    }
-}
-
-@media (hover: none) and (pointer: coarse) {
-    /* Hide YouTube video background. */
-    .video-background, .video-background::after {
-        display: none;
-    }
+    .video-decoration { display: block; }
+    .video-decoration::before,
+    .video-stars { border-width: var(--frame-thickness-mobile); }
+    .video-decoration::after { inset: var(--frame-thickness-mobile); }
 }
