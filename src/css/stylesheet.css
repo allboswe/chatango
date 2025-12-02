@@ -12,3 +12,44 @@ body {
   min-height: 100dvh;
   background-color: white;
 }
+
+.container {
+  width: 100%;
+  display: flex;
+  overflow-y: auto;
+  flex-direction: column;
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+}
+
+.panel {
+  height: 100vh;
+  display: flex;
+  transition: all 0.3s ease;
+  align-items: center;
+  justify-content: center;
+  scroll-snap-align: start;
+}
+
+#panel-1 {
+  background-color: transparent;
+}
+
+#panel-2 {
+  background-color: pink;
+}
+
+@media (min-width: 768px) {
+  .container {
+    height: 100vh;
+    overflow-y: hidden;
+    flex-direction: row;
+    scroll-snap-type: none;
+  }
+
+  .panel {
+    width: 50%;
+    height: 100vh;
+    scroll-snap-type: none;
+  }
+}
