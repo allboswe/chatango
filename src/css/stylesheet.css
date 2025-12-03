@@ -8,10 +8,16 @@ body { line-height: 1.5; -webkit-font-smoothing: antialiased; }
 img, picture, video, canvas, svg { display: block; max-width: 100%; }
 p, h1, h2, h3, h4, h5, h6 { overflow-wrap: break-word; }
 
+html {
+  font-size: 62.5%;
+}
+
 body {
   min-height: 100dvh;
   background-color: white;
 }
+
+/* Primary Container */
 
 .container {
   width: 100%;
@@ -22,6 +28,8 @@ body {
   scroll-snap-type: y mandatory;
 }
 
+/* Panel */
+
 .panel {
   height: 100vh;
   display: flex;
@@ -29,6 +37,23 @@ body {
   align-items: center;
   justify-content: center;
   scroll-snap-align: start;
+}
+
+.panel-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  transition: all 0.3s ease;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  scroll-snap-align: start;
+}
+
+.panel-content {
+  width: 75%;
+  padding: 25px;
+  border-radius: 50px;
 }
 
 #panel-1 {
@@ -39,7 +64,38 @@ body {
   background-color: pink;
 }
 
-@media (min-width: 768px) {
+/* About Me */
+#about-me {
+  background-color: white;
+}
+
+#about-me a {
+  color: #DEA5A4;
+  text-decoration: none;
+}
+
+#about-me p {
+  color: #414A4C;
+  padding: 5px 0 0 0;
+  font-size: 1.0rem;
+  text-align: justify;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#about-me h1 {
+  color: #DEA5A4;
+  font-size: 1.2rem;
+  font-family: "Schoolbell", sans-serif;
+}
+
+#about-me hr {
+  border: none;
+  height: 1px;
+  background-color: #CCC;
+}
+
+
+@media (min-width: 1024px) {
   .container {
     height: 100vh;
     overflow-y: hidden;
