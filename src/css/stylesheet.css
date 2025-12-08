@@ -45,13 +45,14 @@ body {
   display: flex;
   transition: all 0.3s ease;
   align-items: center;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   scroll-snap-align: start;
 }
 
 .panel-content {
   width: 75%;
+  margin: 0 0 25px 0;
   padding: 25px;
   border-radius: 50px;
 }
@@ -92,6 +93,31 @@ body {
   border: none;
   height: 1px;
   background-color: #CCC;
+}
+
+/* Friend List */
+#friend-list {
+  background-color: white;
+}
+
+#friend-list h1 {
+  color: #DEA5A4;
+  font-size: 1.2rem;
+  font-family: "Schoolbell", sans-serif;
+}
+
+#friend-list hr {
+  border: none;
+  height: 1px;
+  background-color: #CCC;
+}
+
+#friend-list img {
+  width: 50px;
+  border: 1px solid #DEA5A4;
+  height: 50px;
+  margin: 5px 2px 0 0;
+  display: inline-block;
 }
 
 
